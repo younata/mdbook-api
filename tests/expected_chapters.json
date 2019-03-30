@@ -1,0 +1,10 @@
+[
+  {"path": "/index.html", "title": "Hello", "subchapters": []},
+  {"path": "/subdir1/index.html", "title": "Subdirectory 1", "subchapters": [
+    {"path": "/subdir1/other.html", "title": "Other Content", "subchapters": []}
+  ]},
+  {"path": "/subdir2/index.html", "title": "Subdirectory With Nested Chapter", "subchapters": [
+    {"path": "/subdir2/chapter_2.html", "title": "Second Chapter in Subdir 2", "subchapters": []},
+    {"path": "/subdir2/subdir3/index.html", "title": "Subdir3 Title", "subchapters":[]}
+  ]}
+]

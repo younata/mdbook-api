@@ -1,0 +1,9 @@
+[book]
+title = "Example Book"
+authors = ["Eh"]
+
+[output.html]
+curly-quotes = true
+no-section-label = true
+
+[output.api]
