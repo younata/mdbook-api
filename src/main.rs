@@ -20,7 +20,7 @@ struct JSONChapter {
 
 fn main() {
     let mut stdin = io::stdin();
-    let context = RenderContext::from_json(&mut stdin).unwrap();
+    let context = RenderContext::from_json(&mut stdin).expect("Unable to create RenderContext.");
 
     let filename_regex = Regex::new(r"md$").expect("Unable to create regex");
 

@@ -27,6 +27,13 @@ fn chapter_json() -> Result<(), Box<std::error::Error>> {
 
     assert_eq!(expected_chapters_path.exists(), true);
 
+    Command::new("cargo")
+        .arg("install")
+        .arg("--path")
+        .arg(".")
+        .assert()
+        .success(); // make sure this is installed.
+
     Command::new("mdbook")
         .arg("build")
         .arg("tests/example_book")
