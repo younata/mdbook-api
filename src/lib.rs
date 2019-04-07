@@ -28,6 +28,18 @@ impl PartialEq for JSONChapter {
     }
 }
 
+#[derive(Serialize, Deserialize, Debug, Eq)]
+pub struct JSONBook {
+    pub title: String,
+    pub chapters: Vec<JSONChapter>
+}
+
+impl PartialEq for JSONBook {
+    fn eq(&self, other: &Self) -> bool {
+        self.title == other.title && self.chapters == other.chapters
+    }
+}
+
 pub fn generate(context: &RenderContext) -> Result<(), Error> {
     let filename_regex = Regex::new(r"md$")?;
 
@@ -39,15 +51,23 @@ pub fn generate(context: &RenderContext) -> Result<(), Error> {
         }
     }).collect::<Vec<JSONChapter>>();
 
-    write_chapters(chapters, &context.destination)?;
+
+    let title = &context.config.book.title.to_owned().unwrap_or(String::from(""));
+
+    write_book(title.to_string(), chapters, &context.destination)?;
     Ok(())
 }
 
-fn write_chapters(chapters: Vec<JSONChapter>, path: &PathBuf) -> Result<(), Error> {
-    let mut chapter_api = File::create(path.join("chapters.json"))?;
+fn write_book(title: String, chapters: Vec<JSONChapter>, path: &PathBuf) -> Result<(), Error> {
+    let mut book_api = File::create(path.join("book.json"))?;
 
-    let content = serde_json::to_string(&chapters)?;
-    writeln!(chapter_api, "{}", content)?;
+    let book = JSONBook {
+        title,
+        chapters,
+    };
+
+    let content = serde_json::to_string(&book)?;
+    writeln!(book_api, "{}", content)?;
     Ok(())
 }
 

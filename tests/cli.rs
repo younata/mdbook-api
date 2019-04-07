@@ -31,24 +31,24 @@ fn create_dummy_book() -> Result<(RenderContext, MDBook, TempDir), Error> {
 }
 
 #[test]
-fn chapter_json() {
+fn book_json() {
     let (ctx, _md, temp) = create_dummy_book().unwrap();
     mdbook_api::generate(&ctx).unwrap();
 
-    let received_chapters_path = temp.path().join("chapters.json");
+    let received_chapters_path = temp.path().join("book.json");
     assert_eq!(received_chapters_path.exists(), true);
-    let expected_chapters_path = Path::new("tests/expected_chapters.json");
+    let expected_chapters_path = Path::new("tests/expected_book.json");
     assert_eq!(expected_chapters_path.exists(), true);
 
-    let received_chapters: Vec<mdbook_api::JSONChapter> = serde_json::from_str(
+    let received_book: mdbook_api::JSONBook = serde_json::from_str(
         &read_to_string(received_chapters_path)
-            .expect("failed to read chapters.json")
-    ).expect("Failed to parse chapters.json");
+            .expect("failed to read book.json")
+    ).expect("Failed to parse book.json");
 
-    let expected_chapters: Vec<mdbook_api::JSONChapter> = serde_json::from_str(
+    let expected_book: mdbook_api::JSONBook = serde_json::from_str(
         &read_to_string(expected_chapters_path)
-            .expect("failed to read expected_chapters.json")
-    ).expect("Failed to parse expected_chapters.json");
+            .expect("failed to read expected_book.json")
+    ).expect("Failed to parse expected_book.json");
 
-    assert_eq!(received_chapters, expected_chapters);
+    assert_eq!(received_book, expected_book);
 }
