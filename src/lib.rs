@@ -93,8 +93,6 @@ fn parse_chapter(chapter: &Chapter, filename_regex: &Regex) -> JSONChapter {
 }
 
 fn generate_markdown_contents(context: &RenderContext) -> Result<(), Error> {
-    let filename_regex = Regex::new(r"md$")?;
-
     let chapters = context.book.sections.iter().filter_map(|item| {
         if let BookItem::Chapter(ref chapter) = *item {
 
@@ -113,12 +111,12 @@ fn generate_markdown_contents(context: &RenderContext) -> Result<(), Error> {
 
 fn copy_chapter(chapter: &Chapter, prefix: &PathBuf) -> JSONChapter {
     let chapter_path = chapter.path.to_str().expect("Chapter path not valid");
-    let path = String::from("/markdown/") + chapter_path;
+    let path = String::from("/api/markdown/") + chapter_path;
 
     let file_path = prefix.join("markdown").join(chapter_path);
 
     let parent_directory = file_path.parent().expect("");
-    create_dir_all(parent_directory);
+    create_dir_all(parent_directory).expect("Unable to create parent directory");
 
     let mut chapter_file = File::create(&file_path).expect(&format!("Unable to create chapter file at {}", file_path.to_str().expect("")));
     writeln!(chapter_file, "{}", chapter.content).expect("Unable to write chapter contents");
