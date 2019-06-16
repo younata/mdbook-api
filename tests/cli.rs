@@ -52,3 +52,40 @@ fn book_json() {
 
     assert_eq!(received_book, expected_book);
 }
+
+#[test]
+fn markdown_json() {
+    let (ctx, _md, temp) = create_dummy_book().unwrap();
+    mdbook_api::generate(&ctx).unwrap();
+
+    let received_chapters_path = temp.path().join("markdown.json");
+    assert_eq!(received_chapters_path.exists(), true);
+    let expected_chapters_path = Path::new("tests/expected_markdown.json");
+    assert_eq!(expected_chapters_path.exists(), true);
+
+    let received_markdown_contents: mdbook_api::JSONBook = serde_json::from_str(
+        &read_to_string(received_chapters_path)
+            .expect("failed to read markdown.json")
+    ).expect("Failed to parse markdown.json");
+
+    let expected_markdown_contents: mdbook_api::JSONBook = serde_json::from_str(
+        &read_to_string(expected_chapters_path)
+            .expect("failed to read expected_markdown.json")
+    ).expect("Failed to parse expected_markdown.json");
+
+    assert_eq!(received_markdown_contents, expected_markdown_contents);
+}
+
+#[test]
+fn book_contents() {
+    let (ctx, _md, temp) = create_dummy_book().unwrap();
+    mdbook_api::generate(&ctx).unwrap();
+
+    let index_path = temp.path().join("markdown/index.md");
+    assert_eq!(index_path.exists(), true);
+
+    let expected_index = "# Hello\n\nWorld\n\n";  // Contents of index.md
+
+    let received_index: &str = &read_to_string(index_path).expect("failed to read index.md");
+    assert_eq!(received_index, expected_index);
+}
