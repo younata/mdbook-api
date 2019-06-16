@@ -3,6 +3,8 @@ name = "mdbook-api"
 version = "0.3.0"
 authors = ["Rachel Brindle <you@subluminal.net>"]
 edition = "2018"
+license = "MIT"
+description = "mdBook backend to generate static json api"
 
 [dependencies]
 mdbook = "0.2"
