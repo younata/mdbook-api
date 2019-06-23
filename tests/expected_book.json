@@ -3,15 +3,18 @@
   "chapters": [
     {
       "path": "/index.html",
+      "md": "/api/markdown/index.md",
       "title": "Hello",
       "subchapters": []
     },
     {
       "path": "/subdir1/index.html",
+      "md": "/api/markdown/subdir1/index.md",
       "title": "Subdirectory 1",
       "subchapters": [
         {
           "path": "/subdir1/other.html",
+          "md": "/api/markdown/subdir1/other.md",
           "title": "Other Content",
           "subchapters": []
         }
@@ -19,15 +22,18 @@
     },
     {
       "path": "/subdir2/index.html",
+      "md": "/api/markdown/subdir2/index.md",
       "title": "Subdirectory With Nested Chapter",
       "subchapters": [
         {
           "path": "/subdir2/chapter_2.html",
+          "md": "/api/markdown/subdir2/chapter_2.md",
           "title": "Second Chapter in Subdir 2",
           "subchapters": []
         },
         {
           "path": "/subdir2/subdir3/index.html",
+          "md": "/api/markdown/subdir2/subdir3/index.md",
           "title": "Subdir3 Title",
           "subchapters": []
         }
