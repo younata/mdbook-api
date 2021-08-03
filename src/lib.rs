@@ -77,7 +77,7 @@ fn write_book(title: String, chapters: Vec<JSONChapter>, path: &PathBuf, filenam
 }
 
 fn copy_chapter(chapter: &Chapter, prefix: &PathBuf, filename_regex: &Regex) -> JSONChapter {
-    let chapter_path = chapter.path.to_str().expect("Chapter path not valid");
+    let chapter_path = chapter.path.as_ref().expect("chapter path not valid").to_str().expect("Chapter path not valid");
 
     let path = String::from("/") + &filename_regex.replace_all(chapter_path, "html");
 

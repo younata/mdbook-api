@@ -18,7 +18,7 @@ fn create_dummy_book() -> Result<(RenderContext, MDBook, TempDir), Error> {
         .join("tests")
         .join("example_book");
 
-    let md = MDBook::load(dummy_book).map_err(SyncFailure::new)?;
+    let md = MDBook::load(dummy_book).expect("Book could not be created");
 
     let ctx = RenderContext::new(
         md.root.clone(),
